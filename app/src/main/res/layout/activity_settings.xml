@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/colorPrimary"
+    android:layout_height="match_parent"
+    tools:context="com.shuvojitkar.lapitchatapp.SettingsActivity">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="170dp"
+        android:src="@drawable/person2"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#ffffff"
+        android:layout_height="170dp"
+        android:layout_marginTop="49dp"
+        android:id="@+id/settings_image"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:textColor="#fff"
+        android:textSize="25sp"
+        android:id="@+id/settings_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/settings_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp"
+        android:text="Display Name" />
+
+    <TextView
+        android:id="@+id/settings_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hi there, i'm using lapit chat app"
+        android:textColor="#fff"
+        android:textSize="17sp"
+        android:layout_below="@+id/settings_name"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/settings_image_btn"
+        android:background="#fff"
+        android:paddingRight="23dp"
+        android:paddingLeft="23dp"
+        android:backgroundTint="#fff"
+        android:textColor="@color/colorPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="19dp"
+        android:text="Change Image"
+        android:layout_above="@+id/settings_status_btn"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/settings_status_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="54dp"
+        android:text="Change Status"
+        android:textColor="#fff"
+        android:paddingRight="18dp"
+        android:paddingLeft="18dp"
+        android:backgroundTint="@color/colorAccent"
+        android:background="@color/colorAccent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/settings_image_btn" />
+
+    <ProgressBar
+        android:id="@+id/settings_img_pd"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="50dp"
+        android:visibility="gone"
+        android:layout_height="50dp"
+        android:layout_marginBottom="18dp"
+        android:layout_above="@+id/settings_image_btn"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

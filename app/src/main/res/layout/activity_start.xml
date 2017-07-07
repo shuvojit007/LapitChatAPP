@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="bottom"
+    android:background="@color/colorPrimary"
+    android:layout_height="match_parent"
+    tools:context="com.shuvojitkar.lapitchatapp.StartActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="25sp"
+        android:textColor="#fff"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_to_lapit_chat_app"
+         />
+
+    <Button
+        android:id="@+id/start_login_btn"
+        android:layout_width="wrap_content"
+        android:background="@color/colorAccent"
+        android:backgroundTint="@color/colorAccent"
+        android:textColor="#fff"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:paddingRight="19dp"
+        android:paddingLeft="19dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/already_have_a_account" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/start_reg_btn"
+        android:layout_gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:backgroundTint="#fff"
+        android:background="#fff"
+        android:text="@string/need_a_account"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/start_login_btn"
+        android:layout_centerHorizontal="true" />
+
+      </LinearLayout>
