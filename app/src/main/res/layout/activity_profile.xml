@@ -44,14 +44,14 @@
         android:id="@+id/profile_sendRequest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="13dp"
         android:text="Send Friend Request"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:textColor="#fff"
         android:background="@color/colorAccent"
         android:backgroundTint="@color/colorAccent"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/profile_declinereq"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -60,8 +60,22 @@
         android:textColor="#fff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="Total Friends"
         android:layout_above="@+id/profile_sendRequest"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="19dp"
-        android:text="Total Friends" />
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/profile_declinereq"
+        android:background="@color/colorAccent"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="#fff"
+        android:text="Decline Friend Request"
+        android:layout_marginBottom="21dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
