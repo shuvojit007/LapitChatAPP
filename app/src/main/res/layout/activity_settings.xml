@@ -68,14 +68,4 @@
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/settings_image_btn" />
 
-    <ProgressBar
-        android:id="@+id/settings_img_pd"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="50dp"
-        android:visibility="gone"
-        android:layout_height="50dp"
-        android:layout_marginBottom="18dp"
-        android:layout_above="@+id/settings_image_btn"
-        android:layout_centerHorizontal="true" />
-
 </RelativeLayout>

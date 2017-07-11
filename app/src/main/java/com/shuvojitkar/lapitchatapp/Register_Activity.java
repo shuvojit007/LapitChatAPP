@@ -20,7 +20,6 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 
@@ -72,7 +71,7 @@ public class Register_Activity extends AppCompatActivity {
               if(task.isSuccessful()) {
                   FirebaseUser currentuser = FirebaseAuth.getInstance().getCurrentUser();
                   String Uid = currentuser.getUid();
-                  mDatabase = GetDatabaseRef.GetDbIns().getReference().child("Users").child(Uid);
+                  mDatabase = GetFirebaseRef.GetDbIns().getReference().child("Users").child(Uid);
                   HashMap<String, String> UserMap = new HashMap<String, String>();
                   UserMap.put("name", display_name);
                   UserMap.put("status", "Hi there, i'm using chat app");

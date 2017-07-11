@@ -11,6 +11,8 @@ import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.instabug.library.Instabug;
+import com.instabug.library.invocation.InstabugInvocationEvent;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -31,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
         //set up the viewpager
         vp.setAdapter(mSectionsPagerAdapter);
         tb.setupWithViewPager(vp);
+
+
+
     }
 
     private void init() {
@@ -70,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
             sendToStart();}
         else if(item.getItemId()==R.id.main_setting_btn){
             startActivity(new Intent(MainActivity.this,SettingsActivity.class));
+        } else if(item.getItemId()==R.id.main_all_user_btn){
+            startActivity(new Intent(MainActivity.this,UsersActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
