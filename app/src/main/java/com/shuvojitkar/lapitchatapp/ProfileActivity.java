@@ -24,6 +24,7 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -33,6 +34,7 @@ public class ProfileActivity extends AppCompatActivity {
     private DatabaseReference mUserDatabase;
     private DatabaseReference mFriendsReqDatabase;
     private DatabaseReference mFriendDatabase;
+    private DatabaseReference mNotificationDatabase;
     private FirebaseUser mCurrentUser;
     private ProgressDialog pd;
     private String mCurrentState;
@@ -57,6 +59,10 @@ public class ProfileActivity extends AppCompatActivity {
         mFriendsReqDatabase = GetFirebaseRef.GetDbIns().getReference().child("Frnds_req");
         mFriendDatabase = GetFirebaseRef.GetDbIns().getReference().child("Friends");
         mUserDatabase = GetFirebaseRef.GetDbIns().getReference().child("Users").child(id);
+        mNotificationDatabase = GetFirebaseRef.GetDbIns().getReference().child("Notifications");
+
+
+        //get the id of current user
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         //Read Data From Firebase
@@ -159,12 +165,19 @@ public class ProfileActivity extends AppCompatActivity {
                                 mFriendsReqDatabase.child(id).child(mCurrentUser.getUid()).child("req_type").setValue("received").addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        mCurrentState = "req_sent";
-                                        mProfileSendReqBtn.setText("Cancel Friend Request");
-                                     //   Toast.makeText(ProfileActivity.this, "Request Send Succesfully", Toast.LENGTH_SHORT).show();
-                                        mProfileDeclinereqBtn.setVisibility(View.INVISIBLE);
-                                        mProfileDeclinereqBtn.setEnabled(false);
 
+                                        HashMap<String,String>ntfmap = new HashMap<>();
+                                        ntfmap.put("from",mCurrentUser.getUid());
+                                        ntfmap.put("type","request");
+                                        mNotificationDatabase.child(id).push().setValue(ntfmap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                mCurrentState = "req_sent";
+                                                mProfileSendReqBtn.setText("Cancel Friend Request");
+                                                mProfileDeclinereqBtn.setVisibility(View.INVISIBLE);
+                                                mProfileDeclinereqBtn.setEnabled(false);
+                                            }
+                                        });
                                     }
                                 });
                             }else {
