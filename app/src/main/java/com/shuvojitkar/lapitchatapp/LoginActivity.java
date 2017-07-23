@@ -12,9 +12,12 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class LoginActivity extends AppCompatActivity {
     private Toolbar mToolbar;
@@ -22,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog mProgress;
     private TextInputLayout mLoginPass;
     private FirebaseAuth mAuth;
+    private DatabaseReference mUserDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +57,21 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete( Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     mProgress.dismiss();
-                    startActivity(new Intent(LoginActivity.this,MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                    finish();
+
+                    String CurrentUserId =mAuth.getCurrentUser().getUid();
+                    String DeviceToke = FirebaseInstanceId.getInstance().getToken();
+                    mUserDatabase.child(CurrentUserId)
+                            .child("deviceToken")
+                            .setValue(DeviceToke).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+
+                            startActivity(new Intent(LoginActivity.this,MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                            finish();
+                        }
+                    });
+
+
                 }else {
                     mProgress.hide();
                     Toast.makeText(LoginActivity.this, "Cannot Sign in. Please check the form and try again.", Toast.LENGTH_LONG).show();
@@ -68,9 +85,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private void init() {
         mAuth = FirebaseAuth.getInstance();
-    mProgress = new ProgressDialog(this);
-    mToolbar = (Toolbar) findViewById(R.id.login_toolbar);
-    mLoginEmail = (TextInputLayout) findViewById(R.id.login_email);
-    mLoginPass = (TextInputLayout) findViewById(R.id.login_password);
+        mProgress = new ProgressDialog(this);
+        mToolbar = (Toolbar) findViewById(R.id.login_toolbar);
+        mLoginEmail = (TextInputLayout) findViewById(R.id.login_email);
+        mLoginPass = (TextInputLayout) findViewById(R.id.login_password);
+        mUserDatabase = GetFirebaseRef.GetDbIns().getReference().child("Users");
     }
 }

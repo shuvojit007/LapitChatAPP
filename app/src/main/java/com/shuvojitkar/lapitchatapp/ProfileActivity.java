@@ -47,6 +47,10 @@ public class ProfileActivity extends AppCompatActivity {
 
         mCurrentState ="not_friends";
 
+        //First time set Decline button to invisible
+        mProfileDeclinereqBtn.setVisibility(View.INVISIBLE);
+        mProfileDeclinereqBtn.setEnabled(false);
+
 
         pd.setTitle("Loading User Data");
         pd.setMessage("Please wait while er load the user data");
