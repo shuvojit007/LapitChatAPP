@@ -72,6 +72,7 @@ public class UsersActivity extends AppCompatActivity {
                 viewHolder.setImage(model.getThumb_image());
                 viewHolder.setStatus(model.getStatus());
 
+
                 final String user_id = getRef(position).getKey();
 
                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
