@@ -5,12 +5,10 @@
     tools:context="com.shuvojitkar.lapitchatapp.Fragment.FriendsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="25sp"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:text="Welcome to Friends Page" />
+ <android.support.v7.widget.RecyclerView
+     android:layout_width="match_parent"
+     android:id="@+id/friend_list"
+     android:layout_height="match_parent">
 
+ </android.support.v7.widget.RecyclerView>
 </FrameLayout>

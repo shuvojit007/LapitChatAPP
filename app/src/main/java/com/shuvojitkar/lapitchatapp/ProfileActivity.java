@@ -33,6 +33,8 @@ public class ProfileActivity extends AppCompatActivity {
     private Button mProfileSendReqBtn,mProfileDeclinereqBtn;
     private ImageView mProfileImage;
     private DatabaseReference mUserDatabase;
+
+    private DatabaseReference mrootUserDatabase;
     private DatabaseReference mRootRef;
     private DatabaseReference mFriendsReqDatabase;
     private DatabaseReference mFriendDatabase;
@@ -71,6 +73,10 @@ public class ProfileActivity extends AppCompatActivity {
 
         //get the id of current user
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+
+        mrootUserDatabase = GetFirebaseRef.GetDbIns().getReference().child("Users").child( FirebaseAuth.getInstance().getCurrentUser().getUid());
+
 
         //Read Data From Firebase
         mUserDatabase.addValueEventListener(new ValueEventListener() {
@@ -213,7 +219,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                 // ------REQ RECEIVED STATE
                 if (mCurrentState.equals("req_received")){
-                    final String CurrentDate  = DateFormat.getDateInstance().format(new Date());
+                    final String CurrentDate  = DateFormat.getDateTimeInstance().format(new Date());
                         Map  friendsmap = new HashMap();
                         friendsmap.put("Friends/"+mCurrentUser.getUid()+"/"+id+"/date",CurrentDate);
                         friendsmap.put("Friends/"+id+"/"+mCurrentUser.getUid()+"/date",CurrentDate);
@@ -272,6 +278,18 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mrootUserDatabase.child("online").setValue(true);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mrootUserDatabase.child("online").setValue(false);
     }
 
     private boolean haveNetworkConnection() {

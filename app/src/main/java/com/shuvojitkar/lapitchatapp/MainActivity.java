@@ -11,12 +11,14 @@ import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.instabug.library.Instabug;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     Toolbar toolbar;
+    private DatabaseReference mUserDatabase;
     private TabLayout tb;
     private ViewPager vp;
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -29,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
         //set up the toolbar
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Lapit Chat App");
+
+        mUserDatabase = GetFirebaseRef.GetDbIns().getReference()
+                .child("Users")
+                .child(mAuth.getCurrentUser().getUid());
 
         //set up the viewpager
         vp.setAdapter(mSectionsPagerAdapter);
@@ -54,7 +60,15 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
            sendToStart();
+        }else {
+            mUserDatabase.child("online").setValue(true);
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mUserDatabase.child("online").setValue(false);
     }
 
     private void sendToStart() {

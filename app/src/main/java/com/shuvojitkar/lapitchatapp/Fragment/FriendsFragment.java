@@ -1,20 +1,149 @@
 package com.shuvojitkar.lapitchatapp.Fragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.shuvojitkar.lapitchatapp.Data.Friends;
+import com.shuvojitkar.lapitchatapp.GetFirebaseRef;
 import com.shuvojitkar.lapitchatapp.R;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FriendsFragment extends Fragment {
+    private View v;
+    private RecyclerView mFriendList;
+    private FirebaseAuth mAuth;
+    private DatabaseReference mFriendDatabase;
+    private DatabaseReference mUserDatabase;
+
+
+    String mCurrent_user_id;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
+        v= inflater.inflate(R.layout.fragment_friends,container,false);
+        mFriendList = (RecyclerView) v.findViewById(R.id.friend_list);
+        mAuth = FirebaseAuth.getInstance();
+
+        mCurrent_user_id = mAuth.getCurrentUser().getUid();
+        mFriendDatabase = GetFirebaseRef.GetDbIns().getReference().child("Friends").child(mCurrent_user_id);
+        mFriendDatabase.keepSynced(true);
+
+        mUserDatabase = GetFirebaseRef.GetDbIns().getReference().child("Users");
+        mUserDatabase.keepSynced(true);
+        init(v);
+
+        mFriendList.setHasFixedSize(true);
+        mFriendList.setLayoutManager(new LinearLayoutManager(v.getContext()));
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_friends, container, false);
+        return v;
+    }
+
+    private void init(View v) {
+        mFriendList = (RecyclerView) v.findViewById(R.id.friend_list);
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        FirebaseRecyclerAdapter <Friends ,FriendsViewHolder> firebaseRecylerAdapter =
+                new FirebaseRecyclerAdapter<Friends, FriendsViewHolder>(
+                        Friends.class,
+                        R.layout.users_single_layout,
+                        FriendsViewHolder.class,
+                        mFriendDatabase
+                ) {
+                    @Override
+                    protected void populateViewHolder(final FriendsViewHolder viewHolder, Friends model, int position) {
+                        viewHolder.setDate(model.getDate());
+                        String list_user_id = getRef(position).getKey();
+
+                        mUserDatabase.child(list_user_id).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String name = dataSnapshot.child("name").getValue().toString();
+                                String thum_image = dataSnapshot.child("thumb_image").getValue().toString();
+
+                               if (dataSnapshot.hasChild("online")){
+                                   boolean online = (boolean) dataSnapshot.child("online").getValue();
+                                   viewHolder.setOnline(online);
+                               }
+
+                                 viewHolder.setName(name);
+                                viewHolder.setImage(thum_image);
+
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+                    }
+                };
+
+                mFriendList.setAdapter(firebaseRecylerAdapter);
+    }
+
+
+
+
+    public static class FriendsViewHolder extends RecyclerView.ViewHolder{
+        View mView;
+        public FriendsViewHolder(View itemView) {
+            super(itemView);
+            mView = itemView;
+        }
+
+        public void setDate(String date) {
+            TextView userDate = (TextView) mView.findViewById(R.id.user_single_status);
+            userDate.setText(date);
+        }
+
+        public void setName(String name) {
+            TextView userName = (TextView) mView.findViewById(R.id.user_single_name);
+            userName.setText(name);
+        }
+
+        public void setImage(String image) {
+            CircleImageView userImage = (CircleImageView) mView.findViewById(R.id.user_single_image);
+            if (!image.equals("")){
+                Picasso.with(mView.getContext()).load(image).into(userImage);
+            }
+        }
+
+
+        public void setOnline(boolean status) {
+            ImageView img = (ImageView) mView.findViewById(R.id.user_single_online_icon);
+            if (status==true){
+                img.setVisibility(View.VISIBLE);
+            }else {
+                img.setVisibility(View.GONE);
+            }
+        }
     }
 }
+
+

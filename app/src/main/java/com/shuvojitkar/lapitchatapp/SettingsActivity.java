@@ -130,6 +130,17 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mDatabase.child("online").setValue(true);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mDatabase.child("online").setValue(false);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
