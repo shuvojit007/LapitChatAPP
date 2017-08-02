@@ -7,6 +7,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.instabug.library.Instabug;
 import com.instabug.library.invocation.InstabugInvocationEvent;
@@ -35,7 +36,8 @@ public class LapitChat extends Application {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot!=null){
-                        mUserDatabase.child("online").onDisconnect().setValue(false);
+                        mUserDatabase.child("online").onDisconnect().setValue(ServerValue.TIMESTAMP);
+
                 }
             }
 
