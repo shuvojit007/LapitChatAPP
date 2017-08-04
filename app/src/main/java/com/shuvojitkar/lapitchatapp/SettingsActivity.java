@@ -300,7 +300,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     //Android random string generator
     //Link --> https://stackoverflow.com/questions/12116092/android-random-string-generator
-    public static String random() {
+/*    public static String random() {
         Random generator = new Random();
         StringBuilder randomStringBuilder = new StringBuilder();
         int randomLength = generator.nextInt(10);
@@ -310,5 +310,5 @@ public class SettingsActivity extends AppCompatActivity {
             randomStringBuilder.append(tempChar);
         }
         return randomStringBuilder.toString();
-    }
+    }*/
 }

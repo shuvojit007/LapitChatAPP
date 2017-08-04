@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.shuvojitkar.lapitchatapp.ChatActivity;
 import com.shuvojitkar.lapitchatapp.Data.Friends;
@@ -137,6 +138,7 @@ public class FriendsFragment extends Fragment {
                 };
 
                 mFriendList.setAdapter(firebaseRecylerAdapter);
+
     }
 
 
